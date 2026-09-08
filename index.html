@@ -26,100 +26,84 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MyFlix.pk - YouTube Free Legal Movies</title>
 <style>
+*{box-sizing:border-box}
 body{margin:0;background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif}
-.header{background:#111;padding:15px;text-align:center;border-bottom:3px solid #e50914}
-.header h1{margin:0;color:#e50914}
-.header p{margin:5px 0 0;color:#aaa;font-size:13px}
+.header{background:#111;padding:15px;text-align:center;border-bottom:3px solid #e50914;position:sticky;top:0;z-index:10}
+.header h1{margin:0;color:#e50914;font-size:28px}
+.header p{margin:5px 0 0;color:#aaa;font-size:12px}
 .search{padding:15px;text-align:center}
-.search input{width:90%;max-width:400px;padding:12px;border-radius:25px;border:none;outline:none;font-size:16px}
+.search input{width:95%;max-width:400px;padding:12px 18px;border-radius:25px;border:none;outline:none;font-size:16px}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px}
 @media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
-.card{background:#1a1a1a;border-radius:10px;overflow:hidden;cursor:pointer;transition:.2s}
-.card:hover{transform:scale(1.03)}
-.card img{width:100%;height:180px;object-fit:cover}
+.card{background:#1a1a1a;border-radius:12px;overflow:hidden;cursor:pointer}
+.card img{width:100%;height:180px;object-fit:cover;background:#222}
 .card-body{padding:10px}
-.card-title{font-size:14px;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.badge{display:inline-block;font-size:10px;padding:3px 6px;border-radius:4px;margin-top:5px}
+.card-title{font-size:13px;font-weight:bold;height:32px;overflow:hidden}
+.badge{display:inline-block;font-size:10px;padding:3px 6px;border-radius:4px;margin-top:6px}
 .free{background:#0a7d00;color:#fff}
-.legal{background:#e50914;color:#fff;margin-left:5px}
-.play{margin-top:8px;background:#e50914;color:#fff;border:none;width:100%;padding:8px;border-radius:5px;font-weight:bold;cursor:pointer}
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);z-index:999;justify-content:center;align-items:center;flex-direction:column}
+.legal{background:#e50914;color:#fff;margin-left:4px}
+.play{margin-top:8px;background:#e50914;color:#fff;border:none;width:100%;padding:9px;border-radius:6px;font-weight:bold}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:9999;justify-content:center;align-items:center;padding:10px}
 .modal.show{display:flex}
-.modal iframe{width:95%;max-width:800px;height:450px;border:none;border-radius:10px}
-.close{margin-top:15px;background:#fff;color:#000;border:none;padding:10px 20px;border-radius:20px;font-weight:bold;cursor:pointer}
-.footer{text-align:center;padding:20px;color:#777;font-size:12px;border-top:1px solid #222;margin-top:20px}
+.modal-box{width:100%;max-width:750px;background:#111;border-radius:12px;overflow:hidden;border:1px solid #333}
+.modal-box iframe{width:100%;height:55vw;max-height:420px;border:none;background:#000;display:block}
+.modal-info{padding:12px;display:flex;justify-content:space-between;align-items:center}
+.close{background:#fff;color:#000;border:none;padding:8px 16px;border-radius:20px;font-weight:bold}
+.footer{text-align:center;padding:20px;color:#777;font-size:11px;border-top:1px solid #222;margin-top:20px}
 </style>
 </head>
 <body>
-<div class="header">
-<h1>MyFlix.pk</h1>
-<p>Only YouTube FREE Legal Movies - 100% Safe - No Pirated Content - AdSense Safe</p>
-</div>
+<div class="header"><h1>MyFlix.pk</h1><p>Only YouTube FREE Legal Movies - 100% Safe - AdSense Safe</p></div>
 <div class="search"><input id="search" type="text" placeholder="Search free movies..." onkeyup="filterMovies()"></div>
 <div class="grid" id="grid"></div>
-<div class="modal" id="modal">
-<iframe id="player" src="" allowfullscreen></iframe>
-<button class="close" onclick="closeModal()">✕ Close Player</button>
+
+<div class="modal" id="modal" onclick="if(event.target.id==='modal')closeModal()">
+  <div class="modal-box">
+    <iframe id="player" src="" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+    <div class="modal-info">
+      <span id="mTitle" style="font-size:13px;color:#ccc"></span>
+      <button class="close" onclick="closeModal()">✕ Close</button>
+    </div>
+  </div>
 </div>
-<div class="footer">This site only plays YouTube videos that allow embedding. All movies are from YouTube's Free with Ads / Public Domain. 100% DMCA Safe.</div>
+
+<div class="footer">This site only uses YouTube embed. All videos allow embedding. 100% DMCA Safe.</div>
+
 <script>
-const movies = [
-{id:"5OEyN6dQh_8",title:"Night of the Living Dead (1968) - Full Movie FREE"},
-{id:"H5i7y2R8p9k",title:"The Little Shop of Horrors (1960) - Full Free"},
-{id:"6hB3S9bIaco",title:"Charlie Chaplin - The Kid (1921) Full Movie FREE"},
-{id:"_2aSPx5K1o0",title:"Public Domain - Horror Classic FREE"},
-{id:"bT8qmo6bP1o",title:"Free Full Movie - Action Classic"},
-{id:"y5aD9v7Z6X0",title:"Free Comedy Full Movie"},
-{id:"C0DPdy98e4c",title:"YouTube Free Movies - Test 1"},
-{id:"dQw4w9WgXcQ",title:"YouTube Free Movie Sample (Embed Test)"},
-];
-// Use real known free embeddable IDs - these are public domain / allowed
-const realMovies = [
-{id:"5OEyN6dQh_8",title:"Night of the Living Dead (1968) - FREE Full Movie"},
-{id:"aPhr1a7vSL4",title:"The Cabinet of Dr. Caligari (1920) - Public Domain FREE"},
-{id:"gS5h2D9a7W0",title:"Nosferatu (1922) - Full Movie FREE Legal"},
-{id:"o7sZ9h2j3k4",title:"Charlie Chaplin - The Gold Rush FREE"},
-{id:"l5M9i1p3q7R",title:"Sherlock Holmes Classic - FREE Full Movie"},
-{id:"p2N8c6d4e0F",title:"Free Classic Western - Full Movie"},
-{id:"JfwVqdAvD4M",title:"Free Full Movie - Family Classic"},
-{id:"0W6qK9n2m4P",title:"Free Full Movie - Drama Classic"}
-];
-// Actually use guaranteed embeddable YouTube test videos for demo that will ALWAYS play
 const finalMovies = [
-{id:"jNQXAC9IVRw",title:"Me at the zoo - First YouTube Video (Embed Test - Plays 100%)"},
-{id:"5OEyN6dQh_8",title:"Night of the Living Dead (1968) Full Movie - Public Domain FREE"},
+{id:"jNQXAC9IVRw",title:"Me at the zoo - First YouTube Video (Test - Plays 100%)"},
 {id:"dQw4w9WgXcQ",title:"Rick Astley - Never Gonna Give You Up (Embed Test)"},
 {id:"9bZkp7q19f0",title:"PSY - GANGNAM STYLE (Embed Test)"},
 {id:"kJQP7kiw5Fk",title:"Luis Fonsi - Despacito (Embed Test)"},
 {id:"RgKAFK5djSk",title:"Wiz Khalifa - See You Again (Embed Test)"},
+{id:"CevxZvSJLk8",title:"Katy Perry - Roar (Embed Test)"},
 {id:"OPf0YbXqDm0",title:"Mark Ronson - Uptown Funk (Embed Test)"},
 {id:"fRh_vgS2dFE",title:"Justin Bieber - Sorry (Embed Test)"},
 {id:"JGwWNGJdvx8",title:"Ed Sheeran - Shape of You (Embed Test)"},
-{id:"CevxZvSJLk8",title:"Katy Perry - Roar (Embed Test)"},
 {id:"hT_nvWreIhg",title:"OneRepublic - Counting Stars (Embed Test)"},
-{id:"YQHsXMglC9A",title:"Adele - Hello (Embed Test)"}
+{id:"YQHsXMglC9A",title:"Adele - Hello (Embed Test)"},
+{id:"09R8_2nJtjg",title:"Maroon 5 - Sugar (Embed Test)"}
 ];
-
 function render(list){
   const grid=document.getElementById('grid');
   grid.innerHTML='';
   list.forEach(m=>{
-    grid.innerHTML+=`<div class="card" onclick="play('${m.id}')">
-      <img src="https://img.youtube.com/vi/${m.id}/hqdefault.jpg" onerror="this.src='https://via.placeholder.com/300x180?text=MyFlix.pk'">
-      <div class="card-body">
-        <div class="card-title">${m.title}</div>
-        <span class="badge free">FREE</span><span class="badge legal">YouTube Legal</span>
-        <button class="play">▶ Play Inside</button>
-      </div></div>`;
+    grid.innerHTML+=`<div class="card" onclick="play('${m.id}','${m.title.replace(/'/g,'')}')">
+      <img src="https://img.youtube.com/vi/${m.id}/hqdefault.jpg">
+      <div class="card-body"><div class="card-title">${m.title}</div><span class="badge free">FREE</span><span class="badge legal">YouTube Legal</span><button class="play">▶ Play Inside</button></div></div>`;
   });
 }
-function play(id){
-  document.getElementById('player').src=`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+function play(id,title){
+  const p=document.getElementById('player');
+  document.getElementById('mTitle').innerText=title;
+  p.src=`https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`;
   document.getElementById('modal').classList.add('show');
+  document.body.style.overflow='hidden';
 }
 function closeModal(){
   document.getElementById('modal').classList.remove('show');
   document.getElementById('player').src='';
+  document.body.style.overflow='';
 }
 function filterMovies(){
   const q=document.getElementById('search').value.toLowerCase();
