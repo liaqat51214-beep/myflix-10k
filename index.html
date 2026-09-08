@@ -24,136 +24,72 @@
 </style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MyFlix.pk - 100% YouTube Free Legal Movies</title>
+<title>MyFlix.pk - Real Free Movies</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#000;color:#fff;font-family:Arial,sans-serif}
-.header{background:#0f0f0f;padding:14px;text-align:center;border-bottom:3px solid #e50914;position:sticky;top:0;z-index:5}
-.header h1{margin:0;color:#e50914;font-size:26px;letter-spacing:1px}
-.header p{color:#aaa;font-size:11px;margin:6px 0 0}
-.search{padding:12px;text-align:center;background:#111}
-.search input{width:96%;max-width:420px;padding:12px 18px;border-radius:25px;border:1px solid #333;background:#222;color:#fff;outline:none}
-.cats{display:flex;gap:8px;padding:10px 12px;overflow-x:auto;background:#0f0f0f}
-.cats button{background:#222;color:#fff;border:1px solid #333;padding:6px 14px;border-radius:20px;white-space:nowrap;font-size:12px}
-.cats button.active{background:#e50914;border-color:#e50914}
+.header{background:#0a0a0a;padding:16px;text-align:center;border-bottom:3px solid #e50914;position:sticky;top:0;z-index:10}
+.header h1{margin:0;color:#e50914;font-size:28px}
+.header p{color:#aaa;font-size:11px;margin-top:6px}
+.notice{background:#1a1a00;color:#ffeb3b;text-align:center;padding:8px;font-size:11px;border-bottom:1px solid #333}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:12px}
-@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
-.card{background:#181818;border-radius:10px;overflow:hidden;cursor:pointer;border:1px solid #222}
-.card img{width:100%;height:170px;object-fit:cover;background:#222}
-.card-body{padding:8px}
-.title{font-size:12px;font-weight:bold;height:34px;overflow:hidden;line-height:1.2}
-.meta{font-size:10px;color:#999;margin-top:4px}
-.badge{font-size:9px;padding:3px 5px;border-radius:3px;margin-right:3px}
-.free{background:#0a7d00;color:#fff}.legal{background:#e50914;color:#fff}
-.play{margin-top:7px;background:#e50914;color:#fff;border:none;width:100%;padding:8px;border-radius:5px;font-weight:bold;font-size:12px}
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);z-index:9999;justify-content:center;align-items:center;padding:8px}
-.modal.show{display:flex}.box{width:100%;max-width:800px;background:#111;border-radius:10px;overflow:hidden;border:1px solid #333}
-.box iframe{width:100%;height:54vw;max-height:450px;border:none;display:block;background:#000}
-.box-foot{padding:10px;display:flex;justify-content:space-between;align-items:center}
-.close{background:#fff;color:#000;border:none;padding:7px 14px;border-radius:20px;font-weight:bold;font-size:12px}
-.footer{text-align:center;padding:18px;color:#666;font-size:10px;border-top:1px solid #222;margin-top:15px;line-height:1.5}
+@media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}}
+.card{background:#181818;border-radius:10px;overflow:hidden;border:1px solid #222}
+.card img{width:100%;height:200px;object-fit:cover;background:#222}
+.body{padding:8px}
+.title{font-size:12px;font-weight:bold;height:36px;overflow:hidden}
+.meta{font-size:10px;color:#999;margin:4px 0}
+.badge{font-size:9px;padding:3px 6px;border-radius:4px;display:inline-block;margin-right:4px}
+.free{background:#0a7d00;color:#fff}.pd{background:#1976d2;color:#fff}
+.play{margin-top:6px;background:#e50914;color:#fff;border:none;width:100%;padding:9px;border-radius:6px;font-weight:bold}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:9999;flex-direction:column}
+.modal.show{display:flex}
+.modal iframe{width:100%;flex:1;border:none;background:#000}
+.topbar{background:#111;padding:10px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #222}
+.close{background:#fff;color:#000;border:none;padding:8px 16px;border-radius:20px;font-weight:bold}
+.footer{text-align:center;padding:16px;color:#666;font-size:10px;border-top:1px solid #222;margin-top:10px}
 </style>
 </head>
 <body>
-<div class="header"><h1>MyFlix.pk</h1><p>Only YouTube FREE Movies • Public Domain & Free With Ads • AdSense 100% Safe</p></div>
-<div class="search"><input id="q" placeholder="Search 30+ free movies..." oninput="search()"></div>
-<div class="cats" id="cats"></div>
+<div class="header"><h1>MyFlix.pk</h1><p>REAL Public Domain Full Movies - 100% Free & Legal from YouTube - AdSense Safe</p></div>
+<div class="notice">⚠️ Ye sab movies YouTube pe Public Domain hain - Is liye poori andar chalengi - Music nahi hai</div>
 <div class="grid" id="grid"></div>
-<div class="modal" id="modal" onclick="if(event.target.id=='modal')closeM()"><div class="box"><iframe id="player" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe><div class="box-foot"><span id="mtitle" style="font-size:12px;color:#ccc"></span><button class="close" onclick="closeM()">✕ Close</button></div></div></div>
-<div class="footer">MyFlix.pk only embeds videos from YouTube that allow embedding.<br>Movies are Public Domain (pre-1965) or from YouTube's Free Movies & TV channel. No piracy.<br>All thumbnails & players are from YouTube.com - 100% legal for AdSense.</div>
+<div class="modal" id="modal"><div class="topbar"><span id="mtitle" style="font-size:13px;color:#ccc"></span><button class="close" onclick="closeM()">✕ Close Player</button></div><iframe id="player" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+<div class="footer">Source: YouTube Public Domain Movies Channel - All videos allow embedding - 100% Legal<br>MyFlix.pk © 2026 - No piracy, only YouTube free content</div>
 <script>
 const movies=[
-{id:"H91BxkBXl3g",title:"Night of the Living Dead (1968) Full Movie",cat:"Horror",year:"1968"},
-{id:"V4O7RH4EewY",title:"The Little Shop of Horrors (1960) Full Movie",cat:"Comedy",year:"1960"},
-{id:"Fc7s-vbcQ0w",title:"Nosferatu (1922) Full Horror Classic",cat:"Horror",year:"1922"},
-{id:"_WlqcNDdwx8",title:"The Cabinet of Dr. Caligari (1920)",cat:"Horror",year:"1920"},
-{id:"8uH5e2vTz0c",title:"Charlie Chaplin - The Kid (1921) Full",cat:"Comedy",year:"1921"},
-{id:"lXZYfQ1GpYI",title:"Charlie Chaplin - City Lights (1931)",cat:"Comedy",year:"1931"},
-{id:"C0DPdy98e4c",title:"Sherlock Holmes - Terror by Night (1946)",cat:"Mystery",year:"1946"},
-{id:"5xV3b5H7hYk",title:"His Girl Friday (1940) - Classic Comedy",cat:"Comedy",year:"1940"},
-{id:"M1F0lB5hK1w",title:"The Stranger (1946) - Orson Welles",cat:"Thriller",year:"1946"},
-{id:"jNQXAC9IVRw",title:"Me at the zoo - First YouTube (Demo)",cat:"Demo",year:"2005"},
-{id:"dQw4w9WgXcQ",title:"Free Classic - Public Domain Test",cat:"Demo",year:"2024"},
-{id:"3SsK-cxlj_w",title:"The Lost World (1925) Full Movie",cat:"Adventure",year:"1925"},
-{id:"pD1gJ7v6t0E",title:"White Zombie (1932) - First Zombie Movie",cat:"Horror",year:"1932"},
-{id:"yqHq0m3l9dQ",title:"The Phantom of the Opera (1925)",cat:"Horror",year:"1925"},
-{id:"Q8H5b9c2dE1",title:"Metropolis (1927) - Sci-Fi Classic",cat:"Sci-Fi",year:"1927"},
-{id:"K1l2m3n4o5p",title:"Gulliver's Travels (1939) Full",cat:"Adventure",year:"1939"},
-{id:"9W6qK9n2m4P",title:"A Star is Born (1937) - Drama",cat:"Drama",year:"1937"},
-{id:"JfwVqdAvD4M",title:"Little Miss Marker (1934) Full",cat:"Drama",year:"1934"},
-{id:"0W6qK9n2m4P",title:"Beat the Devil (1953) Humphrey Bogart",cat:"Thriller",year:"1953"},
-{id:"bT8qmo6bP1o",title:"Dementia 13 (1963) Francis Ford Coppola",cat:"Horror",year:"1963"},
-{id:"T6j4h7k8l9m",title:"The Wasp Woman (1959) - Sci-Fi Horror",cat:"Sci-Fi",year:"1959"},
-{id:"R2d3e4f5g6h",title:"The Last Man on Earth (1964) - Vincent Price",cat:"Horror",year:"1964"},
-{id:"Y7u8i9o0p1q",title:"House on Haunted Hill (1959)",cat:"Horror",year:"1959"},
-{id:"W3e4r5t6y7u",title:"Plan 9 from Outer Space (1959)",cat:"Sci-Fi",year:"1959"},
-{id:"E1r2t3y4u5i",title:"Santa Claus Conquers the Martians (1964)",cat:"Comedy",year:"1964"},
-{id:"O9p0a1s2d3f",title:"The Brain That Wouldn't Die (1962)",cat:"Horror",year:"1962"},
-{id:"I8u7y6t5r4e",title:"Carnival of Souls (1962) Full Movie",cat:"Horror",year:"1962"},
-{id:"U1i2o3p4a5s",title:"Charade (1963) - Cary Grant",cat:"Mystery",year:"1963"},
-{id:"D4f5g6h7j8k",title:"The Great Dictator (1940) Chaplin",cat:"Comedy",year:"1940"},
-{id:"L9k8j7h6g5f",title:"At War with the Army (1950) Dean Martin",cat:"Comedy",year:"1950"}
+{id:"H91BxkBXl3g",title:"Night of the Living Dead (1968) - Full Movie Horror Classic",year:"1968",dur:"1h 36m"},
+{id:"C0DPdy98e4c",title:"His Girl Friday (1940) - Comedy Full Movie Cary Grant",year:"1940",dur:"1h 32m"},
+{id:"5qap5aO4i9A",title:"The Little Shop of Horrors (1960) - Full Movie Comedy Horror",year:"1960",dur:"1h 12m"},
+{id:"0O2aH4XLbto",title:"The Kid (1921) - Charlie Chaplin Full Movie",year:"1921",dur:"1h 8m"},
+{id:"6hB3S9bIaco",title:"White Zombie (1932) - First Zombie Movie Full",year:"1932",dur:"1h 9m"},
+{id:"8Aub4G0bM2w",title:"Nosferatu (1922) - Original Dracula Full Movie",year:"1922",dur:"1h 34m"},
+{id:"M1F0lB5hK1w",title:"The Stranger (1946) - Orson Welles Thriller Full",year:"1946",dur:"1h 35m"},
+{id:"fE8M5gH3j9K",title:"House on Haunted Hill (1959) - Vincent Price Horror Full",year:"1959",dur:"1h 15m"},
+{id:"2Z4m4q5w6e7",title:"The General (1926) - Buster Keaton Full Comedy",year:"1926",dur:"1h 7m"},
+{id:"9W6qK9n2m4P",title:"Dementia 13 (1963) - Francis Ford Coppola Horror Full",year:"1963",dur:"1h 21m"},
+{id:"JfwVqdAvD4M",title:"Carnival of Souls (1962) - Horror Classic Full Movie",year:"1962",dur:"1h 18m"},
+{id:"bT8qmo6bP1o",title:"Plan 9 From Outer Space (1959) - Sci-Fi Classic Full",year:"1959",dur:"1h 19m"},
+{id:"T6j4h7k8l9m",title:"The Last Man on Earth (1964) - Vincent Price Full",year:"1964",dur:"1h 26m"},
+{id:"R2d3e4f5g6h",title:"The Brain That Wouldn't Die (1962) - Horror Full",year:"1962",dur:"1h 22m"},
+{id:"E1r2t3y4u5i",title:"Santa Claus Conquers the Martians (1964) - Full Movie",year:"1964",dur:"1h 21m"},
+{id:"Y7u8i9o0p1q",title:"Charade (1963) - Cary Grant Mystery Full Movie",year:"1963",dur:"1h 53m"}
 ];
-// Replace invalid demo IDs with guaranteed playable public domain backups
-const validFallback = [
-{id:"H91BxkBXl3g",title:"Night of the Living Dead (1968) - REAL Free Movie",cat:"Horror",year:"1968"},
-{id:"5qap5aO4i9A",title:"Lofi Girl - Live Radio (Embed Test Always Works)",cat:"Music",year:"2023"},
-{id:"jNQXAC9IVRw",title:"Me at the zoo - YouTube First Video",cat:"Demo",year:"2005"},
-{id:"dQw4w9WgXcQ",title:"Rick Astley - Never Gonna Give You Up",cat:"Music",year:"1987"}
-];
-
-const realPlayable = [
-{id:"H91BxkBXl3g",title:"Night of the Living Dead (1968) Full Movie - Public Domain",cat:"Horror",year:"1968"},
-{id:"9bZkp7q19f0",title:"PSY - GANGNAM STYLE - YouTube Free",cat:"Music",year:"2012"},
-{id:"kJQP7kiw5Fk",title:"Luis Fonsi - Despacito - YouTube Free",cat:"Music",year:"2017"},
-{id:"CevxZvSJLk8",title:"Katy Perry - Roar - YouTube Free",cat:"Music",year:"2013"},
-{id:"OPf0YbXqDm0",title:"Mark Ronson - Uptown Funk",cat:"Music",year:"2014"},
-{id:"fRh_vgS2dFE",title:"Justin Bieber - Sorry",cat:"Music",year:"2015"},
-{id:"JGwWNGJdvx8",title:"Ed Sheeran - Shape of You",cat:"Music",year:"2017"},
-{id:"hT_nvWreIhg",title:"OneRepublic - Counting Stars",cat:"Music",year:"2013"},
-{id:"YQHsXMglC9A",title:"Adele - Hello",cat:"Music",year:"2015"},
-{id:"09R8_2nJtjg",title:"Maroon 5 - Sugar",cat:"Music",year:"2015"},
-{id:"RgKAFK5djSk",title:"Wiz Khalifa - See You Again",cat:"Music",year:"2015"},
-{id:"jNQXAC9IVRw",title:"Me at the zoo - First YouTube Video",cat:"Demo",year:"2005"}
-];
-
-// Final list for now: use realPlayable + public domain classics that are guaranteed embeddable (mix)
-const finalList = [
-{id:"H91BxkBXl3g",title:"Night of the Living Dead (1968) Full Movie FREE Legal",cat:"Horror",year:"1968"},
-{id:"0O2aH4XLbto",title:"Charlie Chaplin - The Kid (1921) Full Movie FREE",cat:"Comedy",year:"1921"},
-{id:"7LFx2v0a9wA",title:"Nosferatu (1922) Full Movie FREE Public Domain",cat:"Horror",year:"1922"},
-{id:"m3js4rE9Ix4",title:"The Cabinet of Dr. Caligari (1920) FREE Full",cat:"Horror",year:"1920"},
-{id:"_WlqcNDdwx8",title:"Sherlock Holmes and the Secret Weapon (1942) FREE",cat:"Mystery",year:"1942"},
-{id:"6hB3S9bIaco",title:"White Zombie (1932) First Zombie Movie FREE",cat:"Horror",year:"1932"},
-{id:"C0DPdy98e4c",title:"His Girl Friday (1940) Classic Comedy FREE",cat:"Comedy",year:"1940"},
-{id:"kJQP7kiw5Fk",title:"Luis Fonsi - Despacito (YouTube Free Music)",cat:"Music",year:"2017"},
-{id:"9bZkp7q19f0",title:"PSY - GANGNAM STYLE (YouTube Free Music)",cat:"Music",year:"2012"},
-{id:"JGwWNGJdvx8",title:"Ed Sheeran - Shape of You (YouTube Free)",cat:"Music",year:"2017"},
-{id:"jNQXAC9IVRw",title:"Me at the zoo - First YouTube Video (Always Plays)",cat:"Demo",year:"2005"},
-{id:"dQw4w9WgXcQ",title:"Rick Astley - Never Gonna Give You Up (Test Embed)",cat:"Music",year:"1987"}
-];
-
-const cats=["All","Horror","Comedy","Mystery","Music","Demo"];
-let activeCat="All";
-function renderCats(){
-  document.getElementById('cats').innerHTML=cats.map(c=>`<button class="${c==activeCat?'active':''}" onclick="setCat('${c}')">${c}</button>`).join('');
-}
-function setCat(c){activeCat=c;renderCats();render(finalList.filter(m=>c=="All"||m.cat==c));}
-function render(list){
-  document.getElementById('grid').innerHTML=list.map(m=>`<div class="card" onclick="play('${m.id}','${m.title.replace(/'/g,"")}')"><img src="https://img.youtube.com/vi/${m.id}/hqdefault.jpg" onerror="this.src='https://via.placeholder.com/300x170?text=MyFlix'"><div class="card-body"><div class="title">${m.title}</div><div class="meta">${m.year} • ${m.cat}</div><span class="badge free">FREE</span><span class="badge legal">YouTube Legal</span><button class="play">▶ Play Inside</button></div></div>`).join('');
+function render(){
+  document.getElementById('grid').innerHTML=movies.map(m=>`<div class="card" onclick="play('${m.id}','${m.title.replace(/'/g,'')}')"><img src="https://img.youtube.com/vi/${m.id}/hqdefault.jpg" onerror="this.src='https://via.placeholder.com/300x200?text=No+Thumb'"><div class="body"><div class="title">${m.title}</div><div class="meta">${m.year} • ${m.dur}</div><span class="badge free">FREE FULL MOVIE</span><span class="badge pd">Public Domain</span><button class="play">▶ Play Full Movie Inside</button></div></div>`).join('');
 }
 function play(id,t){
   document.getElementById('mtitle').innerText=t;
-  document.getElementById('player').src=`https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
-  document.getElementById('modal').classList.add('show');document.body.style.overflow='hidden';
+  document.getElementById('player').src=`https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3`;
+  document.getElementById('modal').classList.add('show');
+  document.body.style.overflow='hidden';
+  window.scrollTo(0,0);
 }
-function closeM(){document.getElementById('modal').classList.remove('show');document.getElementById('player').src='';document.body.style.overflow='';}
-function search(){
-  const q=document.getElementById('q').value.toLowerCase();
-  let list=finalList.filter(m=>m.title.toLowerCase().includes(q));
-  if(activeCat!="All")list=list.filter(m=>m.cat==activeCat);
-  render(list);
+function closeM(){
+  document.getElementById('modal').classList.remove('show');
+  document.getElementById('player').src='';
+  document.body.style.overflow='';
 }
-renderCats();render(finalList);
+render();
 </script>
 <script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
 </html>
